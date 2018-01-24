@@ -43,7 +43,7 @@ fi
 
 if [ "$model" == "" ] || [ "$model" == "none" ]
 then
-	echo "empty model, setting sd5 (sicdrone) as default, cause git is fuckin trash"
+	echo "empty model, setting sd5 (sicdrone) as default"
 	model="sd5"
 fi
 
