@@ -43,8 +43,8 @@ fi
 
 if [ "$model" == "" ] || [ "$model" == "none" ]
 then
-	echo "empty model, setting typhoon_h480 (sicdrone) as default"
-	model="typhoon_h480"
+	echo "empty model, setting sd5 (sicdrone) as default, cause git is fuckin trash"
+	model="sd5"
 fi
 
 # check replay mode
