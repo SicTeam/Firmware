@@ -2,9 +2,9 @@
 set(CMAKE_TOOLCHAIN_FILE ${PX4_SOURCE_DIR}/cmake/toolchains/Toolchain-native.cmake)
 
 set(config_module_list
-        
-        modules/skynet_app
 
+  ## ADDED BY SIC TEAM ##
+  modules/skynet_app
 
 	drivers/airspeed
 	drivers/boards
