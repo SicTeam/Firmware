@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
 
     <!-- MAVROS posix SITL environment launch script -->
@@ -7,6 +8,7 @@
     <arg name="paused" default="false"/>
 
     <arg name="est" default="ekf2"/>
+    <arg name="primary_vehicle" default="sd5"/>
     <arg name="vehicle" default="iris"/>
     <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
 
@@ -27,13 +29,13 @@
         <arg name="paused" value="$(arg paused)" />
     </include>
 
-    <!-- UAV1 iris_1-->
+    <!-- UAV1 sd5-->
     <group ns="uav1">
         <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
         <arg name="gcs_url" value=""/>
         <arg name="tgt_system" value="1"/> 
         <arg name="tgt_component" value="1"/>
-        <arg name="rcS1" default="$(find px4)/posix-configs/SITL/init/$(arg est)/$(arg vehicle)_1"/>
+        <arg name="rcS1" default="$(find px4)/posix-configs/SITL/init/$(arg est)/$(arg primary_vehicle)_1"/>
         <arg name="ID" value="1"/>
 
         <include file="$(find px4)/launch/single_vehcile_spawn.launch">
@@ -43,7 +45,7 @@
             <arg name="R" value="0"/>
             <arg name="P" value="0"/>
             <arg name="Y" value="0"/>
-            <arg name="vehicle" value="$(arg vehicle)"/>
+            <arg name="vehicle" value="$(arg primary_vehicle)"/>
             <arg name="rcS" value="$(arg rcS1)"/>
             <arg name="mavlink_udp_port" value="14560"/>
             <arg name="ID" value="$(arg ID)"/>
