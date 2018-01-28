@@ -44,7 +44,7 @@ fi
 if [ "$model" == "" ] || [ "$model" == "none" ]
 then
 	echo "empty model, setting sd5 (sicdrone) as default"
-	model="sd5"
+	model="sd5-with-camera"
 fi
 
 # check replay mode
