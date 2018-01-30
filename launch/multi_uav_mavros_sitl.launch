@@ -30,7 +30,7 @@
     </include>
 
     <!-- UAV1 sd5-->
-    <group ns="uav1">
+    <group ns="sd5_1">
         <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
         <arg name="gcs_url" value=""/>
         <arg name="tgt_system" value="1"/> 
