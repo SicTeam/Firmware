@@ -95,5 +95,6 @@
         </include>
     </group>
 
+    <node name="sd5_node" pkg="sd5" type="sd5_node" />
 </launch>
 <!-- vim: set et ft=xml fenc=utf-8 ff=unix sts=0 sw=4 ts=4 : -->
