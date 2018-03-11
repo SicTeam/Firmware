@@ -35,15 +35,10 @@ if [ ! -f $SD5_EXEC ]; then
     exit 1
 fi
 
-#if ! echo $ROS_PACKAGE_PATH | grep -q 'sitl_gazebo'; then
-    echo "sourcing stuff"
-    source $SD5_SETUP
-    source Tools/setup_gazebo.bash $(pwd) $(pwd)/build/posix_sitl_default
-    export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
-    export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/sitl_gazebo
-    echo "PATH..............................................."
-    echo $ROS_PACKAGE_PATH
-    echo "PATH..............................................."
-#fi
+source $SD5_SETUP
+source Tools/setup_gazebo.bash $(pwd) $(pwd)/build/posix_sitl_default
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/sitl_gazebo
+echo "ROS_PACKAGE_PATH: $ROS_PACKAGE_PATH"
 
-roslaunch px4 multi_uav_mavros_sitl.launch
+roslaunch px4 sd5_multi.launch
