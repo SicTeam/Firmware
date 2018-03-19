@@ -1,5 +1,31 @@
-//Here is a file that I made.
+/*
 
+The MIT License
+
+Copyright (c) 2018 SicTeam - (Portland State University)
+
+SicTeam is: Israel Bond, Brandon Craig, Cody Herberholz, Khuong Nguyen,
+            Dakota Sanchez, Samuel Strba, Elijah Whitham-Powell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*/
 
 
 #include <px4_config.h>
@@ -24,12 +50,6 @@
 
 
 static volatile bool thread_running = false;	
-
-
-
-
-
-
 
 
 extern "C" __EXPORT int skynet_app_main(int argc, char *argv[]);
@@ -80,12 +100,12 @@ int skynet_app_main(int argc, char *argv[])
        
     if(!strcmp(argv[1], "test")) {
         
-        PX4_INFO("skynet_app simple test.");
+        PX4_INFO("skynet_app simple test passed.");
         
-        position_setpoint_s z;
-        z.x = 0.0f;
-        if(z.x < 1.0f)
-            PX4_INFO("x coordinate set, test win. yay.");
+        //position_setpoint_s z;
+        //z.x = 0.0f;
+        //if(z.x < 1.0f)
+            //PX4_INFO("x coordinate set, test win. yay.");
 
         return 0;
     }
@@ -95,100 +115,7 @@ int skynet_app_main(int argc, char *argv[])
 
 
 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#ifdef SKYNET
-    /* subscribe to sensor_combined topic */
-    int sensor_sub_fd = orb_subscribe(ORB_ID(sensor_combined));
-    /* limit the update rate to 5 Hz */
-    orb_set_interval(sensor_sub_fd, 200);
-
-    /* advertise attitude topic */
-    struct vehicle_attitude_s att;
-    memset(&att, 0, sizeof(att));
-    orb_advert_t att_pub = orb_advertise(ORB_ID(vehicle_attitude), &att);
-
-    /* one could wait for multiple topics with this technique, just using one here */
-    px4_pollfd_struct_t fds[] = {
-        { .fd = sensor_sub_fd,   .events = POLLIN },
-        /* there could be more file descriptors here, in the form like:
-         * { .fd = other_sub_fd,   .events = POLLIN },
-         */
-    };
-
-    int error_counter = 0;
-
-    for (int i = 0; i < 5; i++) {
-        /* wait for sensor update of 1 file descriptor for 1000 ms (1 second) */
-        int poll_ret = px4_poll(fds, 1, 1000);
-
-        /* handle the poll result */
-        if (poll_ret == 0) {
-            /* this means none of our providers is giving us data */
-            PX4_ERR("Got no data within a second");
-
-        } else if (poll_ret < 0) {
-            /* this is seriously bad - should be an emergency */
-
-            if (error_counter < 10 || error_counter % 50 == 0) {
-                /* use a counter to prevent flooding (and slowing us down) */
-                PX4_ERR("ERROR return value from poll(): %d", poll_ret);
-            }
-
-            error_counter++;
-
-        } else {
-
-            if (fds[0].revents & POLLIN) {
-                /* obtained data for the first file descriptor */
-                struct sensor_combined_s raw;
-                /* copy sensors raw data into local buffer */
-                orb_copy(ORB_ID(sensor_combined), sensor_sub_fd, &raw);
-                PX4_INFO("Accelerometer:\t%8.4f\t%8.4f\t%8.4f",
-                        (double)raw.accelerometer_m_s2[0],
-                        (double)raw.accelerometer_m_s2[1],
-                        (double)raw.accelerometer_m_s2[2]);
-
-                /* set att and publish this information for other apps
-                   the following does not have any meaning, it's just an example
-                   */
-                att.q[0] = raw.accelerometer_m_s2[0];
-                att.q[1] = raw.accelerometer_m_s2[1];
-                att.q[2] = raw.accelerometer_m_s2[2];
-
-                orb_publish(ORB_ID(vehicle_attitude), att_pub, &att);
-            }
-
-            /* there could be more file descriptors here, in the form like:
-             * if (fds[1..n].revents & POLLIN) {}
-             */
-        }
-    }
-
-#endif
-    PX4_INFO("exiting");
-
-    return 0;
-}
-
-
-
+  
 
 static void usage(const char *reason)
 {
